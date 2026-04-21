@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F1EFE8">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:id="@+id/tvWelcome"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Welcome, Buyer"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#2C2C2A"/>
+
+            <Button
+                android:id="@+id/btnLogout"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:text="Logout"
+                android:textSize="12sp"
+                android:backgroundTint="#E24B4A"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Check Crop Availability"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#2C2C2A"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etDistrict"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="District (e.g. Pune)"
+            android:background="@drawable/input_bg"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/etSeason"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Season (kharif / rabi)"
+            android:background="@drawable/input_bg"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginBottom="12dp"/>
+
+        <Button
+            android:id="@+id/btnCheckAvailability"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Check Availability"
+            android:textSize="15sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#0F6E56"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvAvailability"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:textColor="#2C2C2A"
+            android:background="@drawable/input_bg"
+            android:padding="16dp"
+            android:visibility="gone"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Place Purchase Interest"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#2C2C2A"
+            android:layout_marginBottom="12dp"/>
+
+        <EditText
+            android:id="@+id/etCropName"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Crop name (e.g. Chickpea)"
+            android:background="@drawable/input_bg"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/etBuyerDistrict"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="District"
+            android:background="@drawable/input_bg"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/etQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Quantity (kg)"
+            android:inputType="numberDecimal"
+            android:background="@drawable/input_bg"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginBottom="10dp"/>
+
+        <EditText
+            android:id="@+id/etOfferedPrice"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:hint="Offered price per kg (Rs.)"
+            android:inputType="numberDecimal"
+            android:background="@drawable/input_bg"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:layout_marginBottom="12dp"/>
+
+        <Button
+            android:id="@+id/btnPlaceInterest"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:text="Place Purchase Interest"
+            android:textSize="15sp"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#534AB7"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/tvInterestResult"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="14sp"
+            android:textColor="#2C2C2A"
+            android:background="@drawable/input_bg"
+            android:padding="16dp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+</ScrollView>

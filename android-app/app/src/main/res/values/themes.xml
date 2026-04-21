@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.FasalIQ" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#0F6E56</item>
+        <item name="colorPrimaryVariant">#085041</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#534AB7</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="android:statusBarColor">#2C2C2A</item>
+    </style>
+</resources>
