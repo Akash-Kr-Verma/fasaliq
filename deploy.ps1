@@ -17,7 +17,7 @@ if ([string]::IsNullOrWhiteSpace($commitMsg)) {
 git commit -m $commitMsg
 
 Write-Host "`nPushing to GitHub..." -ForegroundColor Yellow
-git push origin main
+git push origin master
 
 Write-Host "`n✅ Done! Render will now automatically build and deploy your backend." -ForegroundColor Green
 Write-Host "   Monitor progress at: https://dashboard.render.com" -ForegroundColor Cyan
