@@ -33,7 +33,7 @@ def get_demand_score(crop_name: str, district: str,
                      market_prices: list) -> float:
     prices = [
         p["price"] for p in market_prices
-        if p["crop_name"] == crop_name
+        if p.get("crop") == crop_name or p.get("crop_name") == crop_name
     ]
     if not prices:
         return 0.5

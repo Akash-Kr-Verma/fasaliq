@@ -6,6 +6,7 @@ from app.core.database import get_db
 from app.crisp.scorer import score_crops
 from app.crisp.anomaly_advisor import get_recovery_plan
 from app.crisp.surplus_checker import check_surplus
+from app.services.market_price_service import get_all_prices_for_district
 
 router = APIRouter(prefix="/api/crisp", tags=["CRISP Engine"])
 
@@ -25,7 +26,7 @@ class SurplusInput(BaseModel):
     crop_counts: dict
 
 @router.post("/recommend")
-def get_recommendation(data: FarmerInput):
+async def get_recommendation(data: FarmerInput):
     farmer_profile = {
         "soil_type": data.soil_type,
         "irrigation": data.irrigation,
@@ -34,7 +35,8 @@ def get_recommendation(data: FarmerInput):
         "district": data.district,
         "season": data.season,
     }
-    recommendations = score_crops(farmer_profile)
+    market_prices = await get_all_prices_for_district(data.district)
+    recommendations = score_crops(farmer_profile, market_prices)
     return {
         "district": data.district,
         "season": data.season,

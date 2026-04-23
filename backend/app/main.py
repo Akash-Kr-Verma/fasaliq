@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.database import engine, Base
 from app.api.buyer import router as buyer_router
 from app.api.admin import router as admin_router
+from app.api.data import router as data_router
 
 
 from app.api.farmer import router as farmer_router
@@ -45,6 +46,7 @@ app.include_router(crisp_router)
 app.include_router(farmer_router)
 app.include_router(buyer_router)
 app.include_router(admin_router)
+app.include_router(data_router)
 
 @app.get("/")
 def root():
