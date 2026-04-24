@@ -15,4 +15,10 @@ class Settings:
     DASHBOARD_USERNAME: str = os.getenv("DASHBOARD_USERNAME", "admin")
     DASHBOARD_PASSWORD: str = os.getenv("DASHBOARD_PASSWORD", "admin123")
 
+    # Databricks MLflow Settings
+    DATABRICKS_HOST: str = os.getenv("DATABRICKS_HOST")
+    DATABRICKS_TOKEN: str = os.getenv("DATABRICKS_TOKEN")
+    DATABRICKS_MODEL_ENDPOINT: str = os.getenv("DATABRICKS_MODEL_ENDPOINT", "fasaliq_crisp_model")
+
+
 settings = Settings()

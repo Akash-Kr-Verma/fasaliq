@@ -74,7 +74,7 @@ def get_profile(user_id: int, db: Session = Depends(get_db)):
     }
 
 @router.get("/recommend/{user_id}")
-def get_recommendation(
+async def get_recommendation(
     user_id: int,
     season: str,
     db: Session = Depends(get_db)
@@ -101,7 +101,7 @@ def get_recommendation(
         "season": season
     }
 
-    top_crops = score_crops(farmer_input)
+    top_crops = await score_crops(farmer_input)
 
     saved = []
     for item in top_crops:

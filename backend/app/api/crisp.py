@@ -1,12 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
+from fastapi import APIRouter
 from pydantic import BaseModel
 from typing import Optional
-from app.core.database import get_db
+from app.crisp.ml_scorer import score_crops_ml
 from app.crisp.scorer import score_crops
 from app.crisp.anomaly_advisor import get_recovery_plan
 from app.crisp.surplus_checker import check_surplus
-from app.services.market_price_service import get_all_prices_for_district
 
 router = APIRouter(prefix="/api/crisp", tags=["CRISP Engine"])
 
@@ -17,6 +15,7 @@ class FarmerInput(BaseModel):
     field_size: float
     district: str
     season: str
+    use_ml: Optional[bool] = True
 
 class AnomalyInput(BaseModel):
     anomaly_type: str
@@ -35,11 +34,23 @@ async def get_recommendation(data: FarmerInput):
         "district": data.district,
         "season": data.season,
     }
-    market_prices = await get_all_prices_for_district(data.district)
-    recommendations = score_crops(farmer_profile, market_prices)
+
+    if data.use_ml:
+        try:
+            recommendations = score_crops_ml(farmer_profile)
+            model_used = "Databricks RandomForest ML"
+        except Exception as e:
+            print(f"ML Scoring Error: {e}")
+            recommendations = await score_crops(farmer_profile)
+            model_used = "Weighted scoring (fallback)"
+    else:
+        recommendations = await score_crops(farmer_profile)
+        model_used = "Weighted scoring"
+
     return {
         "district": data.district,
         "season": data.season,
+        "model_used": model_used,
         "top_3_crops": recommendations
     }
 
