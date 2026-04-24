@@ -46,3 +46,10 @@ android-app/local.properties
 
 # Docker
 .dockerignore
+
+# Node
+node_modules/
+dist/
+
+# Logs
+*.log

@@ -5,6 +5,14 @@ from app.crisp.ml_scorer import score_crops_ml
 from app.crisp.scorer import score_crops
 from app.crisp.anomaly_advisor import get_recovery_plan
 from app.crisp.surplus_checker import check_surplus
+from app.crisp.anomaly_classifier import classify_anomaly_text
+from app.models.anomalies import Anomaly
+from app.models.crops import Crop
+from app.models.users import User
+from app.core.database import get_db
+from sqlalchemy.orm import Session
+from fastapi import Depends
+import json
 
 router = APIRouter(prefix="/api/crisp", tags=["CRISP Engine"])
 
@@ -69,4 +77,45 @@ def surplus_check(data: SurplusInput):
         "district": data.district,
         "alerts": alerts,
         "total_alerts": len(alerts)
+    }
+
+class ReportAnomalyInput(BaseModel):
+    farmer_id: int
+    description: str
+
+@router.post("/report-anomaly")
+def report_anomaly(data: ReportAnomalyInput, db: Session = Depends(get_db)):
+    # 1. AI Classification
+    classification = classify_anomaly_text(data.description)
+    
+    # 2. Find Crop ID (if possible)
+    crop = db.query(Crop).filter(Crop.name == classification["crop"]).first()
+    if not crop:
+        # Fallback to a default or first available crop for record-keeping if needed, 
+        # but here we'll just use a generic ID or leave it. 
+        # Let's assume we need a crop_id as per model constraints.
+        crop = db.query(Crop).first() 
+
+    # 3. Get Recovery Plan
+    recovery = get_recovery_plan(classification["anomaly_type"])
+    
+    # 4. Save to DB
+    new_anomaly = Anomaly(
+        farmer_id=data.farmer_id,
+        crop_id=crop.id,
+        anomaly_type=classification["anomaly_type"],
+        detected_crop=classification["crop"],
+        reason=classification["reason"],
+        description=data.description,
+        recovery_plan=json.dumps(recovery["steps"])
+    )
+    
+    db.add(new_anomaly)
+    db.commit()
+    db.refresh(new_anomaly)
+    
+    return {
+        "message": "Anomaly reported and classified by FasalIQ AI",
+        "classification": classification,
+        "recovery_plan": recovery
     }
