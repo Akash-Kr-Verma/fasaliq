@@ -53,4 +53,13 @@ interface ApiService {
         @Query("district") district: String,
         @Query("season") season: String
     ): Response<Map<String, Any>>
+    @POST("api/chat/start")
+    suspend fun startChatSession(
+        @Body request: Map<String, Int>
+    ): Response<Map<String, Any>>
+
+    @POST("api/chat/message")
+    suspend fun sendChatMessage(
+        @Body request: ChatMessageRequest
+    ): Response<Map<String, Any>>
 }

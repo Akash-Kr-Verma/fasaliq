@@ -65,7 +65,30 @@ ANOMALY_RECOVERY = {
         ],
         "severity": "medium",
     },
+    "heatstroke": {
+        "title": "Severe Heatstroke (Extreme Weather)",
+        "steps": [
+            "Apply immediate light irrigation to lower soil temperature",
+            "Use shade nets if possible for high-value crops like strawberries",
+            "Apply kaolin spray to reflect sunlight and reduce leaf temperature",
+            "Avoid applying nitrogen fertilizer during peak heat",
+            "Increase mulching to protect roots from soil heating",
+        ],
+        "severity": "critical",
+    },
+    "irrigation_failure": {
+        "title": "Irrigation System Failure",
+        "steps": [
+            "Repair water pumps or delivery lines immediately",
+            "Prioritize critical growth stages for remaining water",
+            "Use water tankers for emergency survival irrigation",
+            "Apply anti-transpirants to reduce plant water loss",
+            "Shift to drip irrigation to maximize water use efficiency",
+        ],
+        "severity": "high",
+    },
 }
+
 
 def get_recovery_plan(anomaly_type: str) -> dict:
     plan = ANOMALY_RECOVERY.get(anomaly_type.lower())

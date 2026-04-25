@@ -8,3 +8,5 @@ python-jose[cryptography]
 pandas
 scikit-learn
 httpx
+
+google-generativeai

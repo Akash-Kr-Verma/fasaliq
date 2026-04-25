@@ -13,6 +13,8 @@ from app.crisp.surplus_checker import check_surplus
 from datetime import date
 from fastapi.responses import HTMLResponse
 from app.core.security import verify_dashboard_credentials
+from sqlalchemy import func
+
 
 router = APIRouter(prefix="/api/admin", tags=["Admin"])
 
@@ -54,7 +56,15 @@ def get_dashboard(db: Session = Depends(get_db)):
 
     total_anomalies = db.query(Anomaly).count()
 
+    # Get anomalies by district for hotspot visualization
+    anomalies_by_dist = db.query(
+        User.district, func.count(Anomaly.id).label("count")
+    ).join(Anomaly, Anomaly.farmer_id == User.id).group_by(User.district).all()
+    
+    anomalies_summary = [{"district": d, "count": c} for d, c in anomalies_by_dist]
+
     # Get latest 5 anomalies with farmer names
+
     latest_anomalies = db.query(Anomaly).join(User, Anomaly.farmer_id == User.id).order_by(
         Anomaly.reported_at.desc()
     ).limit(5).all()
@@ -70,6 +80,7 @@ def get_dashboard(db: Session = Depends(get_db)):
         "total_recommendations": total_recommendations,
         "total_surplus_alerts": total_surplus_alerts,
         "total_anomalies": total_anomalies,
+        "anomalies_by_district": anomalies_summary,
         "recent_anomalies": [
             {
                 "id": a.id,
@@ -81,6 +92,7 @@ def get_dashboard(db: Session = Depends(get_db)):
                 "reported_at": a.reported_at
             } for a in latest_anomalies
         ],
+
         "recent_recommendations": [
             {
                 "id": r.id,
@@ -335,6 +347,8 @@ def get_anomalies(
             {
                 "id": a.id,
                 "farmer_id": a.farmer_id,
+                "farmer_name": a.farmer.name,
+                "district": a.farmer.district,
                 "crop_id": a.crop_id,
                 "type": a.anomaly_type,
                 "detected_crop": a.detected_crop,
@@ -345,6 +359,7 @@ def get_anomalies(
             for a in anomalies
         ]
     }
+
 
 @router.get("/crops")
 def get_all_crops(db: Session = Depends(get_db)):

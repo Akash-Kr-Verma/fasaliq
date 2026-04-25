@@ -1,4 +1,4 @@
-package com.fasaliq.app.ui.farmer
+package com.fasaliq.app.ui.farmers
 
 import android.content.Intent
 import android.os.Bundle
@@ -159,6 +159,11 @@ class FarmerDashboardActivity : AppCompatActivity() {
                     btnGetRecovery.text = "Get Recovery Plan"
                 }
             }
+        }
+
+        val btnOpenChat = findViewById<Button>(R.id.btnOpenChat)
+        btnOpenChat.setOnClickListener {
+            startActivity(Intent(this, ChatActivity::class.java))
         }
     }
 }

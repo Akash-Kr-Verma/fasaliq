@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { getDistrictOverview, getDistrictAnalytics } from '../api/adminService';
+import { getDistrictOverview, getDistrictAnalytics, getAnomalies } from '../api/adminService';
 import { COLORS } from '../utils/theme';
+import { downloadCSV } from '../utils/csvExport';
 import MaharashtraMap from '../components/MaharashtraMap';
 import StatCard from '../components/StatCard';
 import {
@@ -53,7 +54,9 @@ export default function DistrictOverview() {
   const [district, setDistrict] = useState('Pune');
   const [overviewData, setOverviewData] = useState(null);
   const [analyticsData, setAnalyticsData] = useState(null);
+  const [anomalies, setAnomalies] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showAllAnomalies, setShowAllAnomalies] = useState(false);
 
   useEffect(() => {
     loadAll(district);
@@ -63,14 +66,40 @@ export default function DistrictOverview() {
     setLoading(true);
     Promise.all([
       getDistrictOverview(d),
-      getDistrictAnalytics(d)
+      getDistrictAnalytics(d),
+      getAnomalies(d)
     ])
-      .then(([r1, r2]) => {
+      .then(([r1, r2, r3]) => {
         setOverviewData(r1.data);
         setAnalyticsData(r2.data);
+        setAnomalies(r3.data.anomalies);
         setLoading(false);
       })
       .catch(() => setLoading(false));
+  };
+
+  const getMostFrequentAnomaly = (data) => {
+    if (!data || data.length === 0) return 'None';
+    const counts = {};
+    data.forEach(a => {
+      const type = a.type || 'Unknown';
+      counts[type] = (counts[type] || 0) + 1;
+    });
+    return Object.keys(counts).reduce((a, b) => counts[a] > counts[b] ? a : b);
+  };
+
+  const mostFrequent = getMostFrequentAnomaly(anomalies);
+
+  const handleDownloadCSV = () => {
+    const exportData = anomalies.map(a => ({
+      ID: a.id,
+      Farmer: a.farmer_name,
+      Type: a.type,
+      Crop: a.detected_crop,
+      Reason: a.reason,
+      Date: new Date(a.reported_at).toLocaleString()
+    }));
+    downloadCSV(exportData, `${district}_anomalies_${new Date().toISOString().split('T')[0]}.csv`);
   };
 
   const progressData = overviewData?.crops_in_progress
@@ -113,10 +142,10 @@ export default function DistrictOverview() {
                 icon="🌾" color={COLORS.green}
               />
               <StatCard
-                title="Surplus Risk"
-                value={overviewData.surplus_alerts?.length || 0}
-                subtitle="Active warnings"
-                icon="⚠️" color={COLORS.amber}
+                title="Frequent Issue"
+                value={mostFrequent}
+                subtitle={`Top anomaly in ${district}`}
+                icon="🔴" color={COLORS.coral}
               />
               {compliance && (
                 <StatCard
@@ -136,6 +165,63 @@ export default function DistrictOverview() {
 
       {overviewData && analyticsData && !loading && (
         <>
+          {/* ── Anomaly Intelligence ── */}
+          <div style={{
+            background: COLORS.white, border: '1px solid #E5E3DC',
+            borderRadius: 12, padding: 24, marginBottom: 24,
+            borderTop: `6px solid ${COLORS.coral}`
+          }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+              <div>
+                <h3 style={{ margin: 0, color: COLORS.coral }}>🔴 Anomaly Intelligence: {district}</h3>
+                <p style={{ color: COLORS.gray, fontSize: 12, marginTop: 4 }}>
+                  Real-time production and market issues reported within this district.
+                </p>
+              </div>
+              <button 
+                onClick={handleDownloadCSV}
+                style={{
+                  padding: '10px 16px', background: COLORS.coral, color: 'white',
+                  border: 'none', borderRadius: 8, cursor: 'pointer', fontWeight: 600,
+                  fontSize: 13
+                }}
+              >
+                📥 Download {district} CSV
+              </button>
+            </div>
+
+            {anomalies.length > 0 ? (
+              <>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 12 }}>
+                  {(showAllAnomalies ? anomalies : anomalies.slice(0, 5)).map((a, i) => (
+                    <div key={i} style={{ padding: '14px', background: '#FEF2F2', borderRadius: 10, borderLeft: `4px solid ${COLORS.coral}` }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                        <strong style={{ fontSize: 13, color: COLORS.dark }}>{a.detected_crop}</strong>
+                        <span style={{ fontSize: 11, color: COLORS.gray }}>{new Date(a.reported_at).toLocaleDateString()}</span>
+                      </div>
+                      <div style={{ fontSize: 12, color: COLORS.coral, fontWeight: 700, marginBottom: 4 }}>{a.reason}</div>
+                      <div style={{ fontSize: 11, color: COLORS.gray }}>Farmer: <strong>{a.farmer_name}</strong></div>
+                    </div>
+                  ))}
+                </div>
+                {anomalies.length > 5 && (
+                  <button 
+                    onClick={() => setShowAllAnomalies(!showAllAnomalies)}
+                    style={{ 
+                      marginTop: 16, width: '100%', padding: '12px', 
+                      background: '#FEE2E2', color: COLORS.coral, border: 'none', 
+                      borderRadius: 8, fontSize: 13, fontWeight: 600, cursor: 'pointer' 
+                    }}
+                  >
+                    {showAllAnomalies ? '↑ Show Less' : `↓ Show All ${district} Anomalies (${anomalies.length})`}
+                  </button>
+                )}
+              </>
+            ) : (
+              <p style={{ color: COLORS.gray, fontSize: 13 }}>No anomalies reported in this district.</p>
+            )}
+          </div>
+
           {/* ── MSP vs Market Price ── */}
           <div style={{
             background: COLORS.white, border: '1px solid #E5E3DC',

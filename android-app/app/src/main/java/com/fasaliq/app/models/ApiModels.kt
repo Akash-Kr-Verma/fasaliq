@@ -92,3 +92,10 @@ data class RegisterResponse(
     val name: String,
     val role: String
 )
+
+data class ChatMessageRequest(
+    val session_id: String,
+    val message: String,
+    val message_type: String = "text",
+    val image_base64: String? = null
+)

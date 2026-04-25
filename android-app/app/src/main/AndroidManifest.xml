@@ -30,11 +30,15 @@
             android:exported="false"/>
 
         <activity
-            android:name=".ui.farmer.FarmerDashboardActivity"
+            android:name=".ui.farmers.FarmerDashboardActivity"
             android:exported="false"/>
 
         <activity
             android:name=".ui.buyer.BuyerDashboardActivity"
+            android:exported="false"/>
+
+        <activity
+            android:name=".ui.farmers.ChatActivity"
             android:exported="false"/>
 
     </application>

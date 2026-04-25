@@ -32,3 +32,6 @@ export const getWeather = (district) =>
 
 export const getAllPrices = (district) =>
   API.get(`/api/data/prices/${district}`);
+
+export const getAnomalies = (district = '') =>
+  API.get(`/api/admin/anomalies${district ? `?district=${district}` : ''}`);

@@ -16,11 +16,13 @@ from app.models import (
     market_prices,
     anomalies,
     surplus_alerts,
-    buyer_interests
+    buyer_interests,
+    chat_sessions
 )
 
 from app.api.auth import router as auth_router
 from app.api.crisp import router as crisp_router
+from app.api.chat import router as chat_router
 
 app = FastAPI(
     title="FasalIQ API",
@@ -47,6 +49,7 @@ app.include_router(farmer_router)
 app.include_router(buyer_router)
 app.include_router(admin_router)
 app.include_router(data_router)
+app.include_router(chat_router)
 
 @app.get("/")
 def root():

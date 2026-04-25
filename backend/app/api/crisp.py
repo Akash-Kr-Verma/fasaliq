@@ -82,11 +82,17 @@ def surplus_check(data: SurplusInput):
 class ReportAnomalyInput(BaseModel):
     farmer_id: int
     description: str
+    weather_condition: Optional[str] = None
+    irrigation_status: Optional[str] = None
 
 @router.post("/report-anomaly")
 def report_anomaly(data: ReportAnomalyInput, db: Session = Depends(get_db)):
     # 1. AI Classification
-    classification = classify_anomaly_text(data.description)
+    classification = classify_anomaly_text(
+        data.description, 
+        weather=data.weather_condition, 
+        irrigation=data.irrigation_status
+    )
     
     # 2. Find Crop ID (if possible)
     crop = db.query(Crop).filter(Crop.name == classification["crop"]).first()
@@ -109,6 +115,7 @@ def report_anomaly(data: ReportAnomalyInput, db: Session = Depends(get_db)):
         description=data.description,
         recovery_plan=json.dumps(recovery["steps"])
     )
+
     
     db.add(new_anomaly)
     db.commit()
