@@ -9,4 +9,4 @@ pandas
 scikit-learn
 httpx
 
-google-generativeai
+google-genai
