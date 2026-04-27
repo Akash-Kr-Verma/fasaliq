@@ -75,7 +75,13 @@ class RegisterActivity : AppCompatActivity() {
                         )
                         finish()
                     } else {
-                        tvError.text = "Phone number already registered"
+                        val errorBody = response.errorBody()?.string()
+                        val errorMessage = try {
+                            JSONObject(errorBody).getString("detail")
+                        } catch (e: Exception) {
+                            "Registration failed"
+                        }
+                        tvError.text = errorMessage
                         btnRegister.isEnabled = true
                         btnRegister.text = "Create Account"
                     }

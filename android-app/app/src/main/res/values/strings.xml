@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">FasalIQ</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_history">History</string>
+    <string name="nav_ai">AI</string>
+    <string name="nav_documents">Documents</string>
+    <string name="nav_newsletter">News-letter</string>
+    <string name="emergency_title">EMERGENCY</string>
+    <string name="emergency_subtitle">Speed Dial</string>
+    <string name="emergency_tap">Tap to call for help</string>
+    <string name="logged_in">You are Logged In</string>
+    <string name="login_status">Login Status</string>
+    <string name="logout">LOGOUT</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="land_field_details">Land &amp; Field Details</string>
+    <string name="notification_settings">Notification Settings</string>
+    <string name="app_settings">App Settings</string>
+    <string name="help_support">Help &amp; Support</string>
 </resources>

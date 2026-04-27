@@ -1,4 +1,4 @@
-package com.fasaliq.app.ui.farmers
+package com.fasaliq.app.ui.farmer
 
 import android.app.Activity
 import android.content.Intent

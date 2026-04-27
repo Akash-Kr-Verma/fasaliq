@@ -71,7 +71,7 @@ async def chat_with_gemini(
         )
 
         response = client.models.generate_content(
-            model="gemini-2.0-flash",
+            model="gemini-flash-latest",
             contents=history,
             config=types.GenerateContentConfig(
                 system_instruction=SYSTEM_PROMPT,
@@ -91,6 +91,7 @@ async def chat_with_gemini(
         }
 
     except Exception as e:
+        print(f"Gemini Error: {e}")
         return {
             "response": (
                 "माफ करें, अभी सेवा उपलब्ध नहीं है। "

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/bg_light">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="20dp"
+        android:gravity="center_vertical">
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Newsletter" android:textSize="26sp" android:textStyle="bold" android:textColor="@color/forest_green"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Stay updated, stay ahead" android:textSize="13sp" android:textColor="@color/text_soft"/>
+        </LinearLayout>
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+            <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_dialog_map" android:tint="@color/forest_green" android:layout_marginEnd="4dp"/>
+            <TextView android:id="@+id/tvLocation" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pune, Maharashtra" android:textSize="12sp" android:textColor="@color/forest_green" android:textStyle="bold"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:paddingStart="16dp" android:paddingEnd="16dp">
+
+            <!-- Weather -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="10dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Weather Forecast" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/text_dark"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Next 3 Days" android:textSize="12sp" android:textColor="@color/text_soft"/>
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="View More ›" android:textSize="13sp" android:textColor="@color/forest_green" android:textStyle="bold"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="16dp">
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:background="@drawable/bg_weather_card" android:padding="14dp" android:gravity="center" android:layout_marginEnd="6dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Today" android:textSize="12sp" android:textColor="@color/text_soft"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="☀️" android:textSize="28sp" android:layout_marginTop="4dp"/>
+                    <TextView android:id="@+id/tvToday" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="32°/24°" android:textSize="14sp" android:textStyle="bold" android:textColor="@color/text_dark" android:layout_marginTop="4dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Sunny" android:textSize="11sp" android:textColor="@color/text_soft"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:background="@drawable/bg_weather_card" android:padding="14dp" android:gravity="center" android:layout_marginEnd="6dp">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tomorrow" android:textSize="12sp" android:textColor="@color/text_soft"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🌧️" android:textSize="28sp" android:layout_marginTop="4dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="31°/23°" android:textSize="14sp" android:textStyle="bold" android:textColor="@color/text_dark" android:layout_marginTop="4dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Light Rain" android:textSize="11sp" android:textColor="@color/text_soft"/>
+                </LinearLayout>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:background="@drawable/bg_weather_card" android:padding="14dp" android:gravity="center">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wed" android:textSize="12sp" android:textColor="@color/text_soft"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="⛅" android:textSize="28sp" android:layout_marginTop="4dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="30°/23°" android:textSize="14sp" android:textStyle="bold" android:textColor="@color/text_dark" android:layout_marginTop="4dp"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cloudy" android:textSize="11sp" android:textColor="@color/text_soft"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Mandi Prices -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="10dp">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Mandi Price" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/text_dark"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="(Your Crop First)" android:textSize="12sp" android:textColor="@color/text_soft" android:layout_marginEnd="6dp"/>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Live Prices" android:textSize="12sp" android:textColor="@color/forest_green" android:textStyle="bold"/>
+            </LinearLayout>
+
+            <HorizontalScrollView android:layout_width="match_parent" android:layout_height="wrap_content" android:scrollbars="none" android:layout_marginBottom="16dp">
+                <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="horizontal">
+
+                    <LinearLayout android:layout_width="110dp" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_price_card" android:padding="14dp" android:layout_marginEnd="10dp" android:elevation="2dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Wheat" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🌾" android:textSize="20sp" android:layout_marginTop="4dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="₹ 2,275" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/text_dark" android:layout_marginTop="4dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="/Quintal" android:textSize="10sp" android:textColor="@color/text_soft"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▲ 35" android:textSize="12sp" android:textColor="@color/trend_up" android:textStyle="bold" android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="110dp" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_price_card" android:padding="14dp" android:layout_marginEnd="10dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Paddy" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🌾" android:textSize="20sp" android:layout_marginTop="4dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="₹ 1,980" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/text_dark" android:layout_marginTop="4dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="/Quintal" android:textSize="10sp" android:textColor="@color/text_soft"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▲ 20" android:textSize="12sp" android:textColor="@color/trend_up" android:textStyle="bold" android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="110dp" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_price_card" android:padding="14dp" android:layout_marginEnd="10dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Cotton" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🌿" android:textSize="20sp" android:layout_marginTop="4dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="₹ 6,620" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/text_dark" android:layout_marginTop="4dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="/Quintal" android:textSize="10sp" android:textColor="@color/text_soft"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="▼ 10" android:textSize="12sp" android:textColor="@color/trend_down" android:textStyle="bold" android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+
+                    <LinearLayout android:layout_width="110dp" android:layout_height="wrap_content" android:orientation="vertical" android:background="@drawable/bg_price_card" android:padding="14dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Soybean" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="🫘" android:textSize="20sp" android:layout_marginTop="4dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="₹ 4,350" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/text_dark" android:layout_marginTop="4dp"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="/Quintal" android:textSize="10sp" android:textColor="@color/text_soft"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="→ 0" android:textSize="12sp" android:textColor="@color/text_soft" android:textStyle="bold" android:layout_marginTop="4dp"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- News -->
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="10dp">
+                <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Latest News &amp; Updates" android:textSize="16sp" android:textStyle="bold" android:textColor="@color/text_dark"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:background="@drawable/bg_card_rounded" android:padding="14dp" android:gravity="center_vertical" android:layout_marginBottom="10dp">
+                <View android:layout_width="64dp" android:layout_height="64dp" android:background="@drawable/bg_news_image" android:layout_marginEnd="12dp"/>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="New Irrigation Project Launched in Surat District" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2 hours ago" android:textSize="11sp" android:textColor="@color/text_soft" android:layout_marginTop="4dp"/>
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="›" android:textSize="20sp" android:textColor="@color/text_soft"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:background="@drawable/bg_card_rounded" android:padding="14dp" android:gravity="center_vertical" android:layout_marginBottom="10dp">
+                <View android:layout_width="64dp" android:layout_height="64dp" android:background="@drawable/bg_news_image" android:layout_marginEnd="12dp"/>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Subsidy Increased for Drip Irrigation Systems" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="1 day ago" android:textSize="11sp" android:textColor="@color/text_soft" android:layout_marginTop="4dp"/>
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="›" android:textSize="20sp" android:textColor="@color/text_soft"/>
+            </LinearLayout>
+
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:background="@drawable/bg_card_rounded" android:padding="14dp" android:gravity="center_vertical" android:layout_marginBottom="10dp">
+                <View android:layout_width="64dp" android:layout_height="64dp" android:background="@drawable/bg_news_image" android:layout_marginEnd="12dp"/>
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="PM Kisan 16th Installment Date Announced" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark"/>
+                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="2 days ago" android:textSize="11sp" android:textColor="@color/text_soft" android:layout_marginTop="4dp"/>
+                </LinearLayout>
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="›" android:textSize="20sp" android:textColor="@color/text_soft"/>
+            </LinearLayout>
+
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="View All News ›" android:textSize="14sp" android:textColor="@color/forest_green" android:textStyle="bold" android:gravity="center" android:layout_marginBottom="100dp" android:padding="12dp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -11,7 +11,7 @@ import com.fasaliq.app.api.RetrofitClient
 import com.fasaliq.app.models.LoginRequest
 import com.fasaliq.app.ui.auth.RegisterActivity
 import com.fasaliq.app.ui.buyer.BuyerDashboardActivity
-import com.fasaliq.app.ui.farmers.FarmerDashboardActivity
+import com.fasaliq.app.ui.farmer.FarmerDashboardActivity
 import com.fasaliq.app.utils.SessionManager
 import kotlinx.coroutines.launch
 

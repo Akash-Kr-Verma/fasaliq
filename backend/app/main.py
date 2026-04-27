@@ -23,6 +23,7 @@ from app.models import (
 from app.api.auth import router as auth_router
 from app.api.crisp import router as crisp_router
 from app.api.chat import router as chat_router
+from app.api.harvest import router as harvest_router
 
 app = FastAPI(
     title="FasalIQ API",
@@ -50,6 +51,7 @@ app.include_router(buyer_router)
 app.include_router(admin_router)
 app.include_router(data_router)
 app.include_router(chat_router)
+app.include_router(harvest_router)
 
 @app.get("/")
 def root():

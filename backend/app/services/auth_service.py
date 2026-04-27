@@ -5,14 +5,25 @@ from app.core.security import hash_password, verify_password, create_access_toke
 from fastapi import HTTPException, status
 
 def register_user(data: RegisterRequest, db: Session):
+    print(f"DEBUG: Received registration request for data: {data}")
+    print(f"DEBUG: Checking if user with phone {data.phone} exists...")
     existing = db.query(User).filter(
         User.phone == data.phone
     ).first()
+    print(f"DEBUG: Found existing user: {existing}")
     if existing:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Phone number already registered"
         )
+
+    if data.email:
+        existing_email = db.query(User).filter(User.email == data.email).first()
+        if existing_email:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Email already registered"
+            )
 
     user = User(
         name=data.name,
@@ -23,9 +34,17 @@ def register_user(data: RegisterRequest, db: Session):
         district=data.district,
         state=data.state
     )
-    db.add(user)
-    db.commit()
-    db.refresh(user)
+    try:
+        db.add(user)
+        db.commit()
+        db.refresh(user)
+    except Exception as e:
+        db.rollback()
+        print(f"DEBUG: Error during registration: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Registration failed: Possible duplicate phone or email"
+        )
     return user
 
 def login_user(data: LoginRequest, db: Session):

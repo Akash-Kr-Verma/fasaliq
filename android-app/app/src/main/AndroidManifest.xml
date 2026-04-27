@@ -30,7 +30,7 @@
             android:exported="false"/>
 
         <activity
-            android:name=".ui.farmers.FarmerDashboardActivity"
+            android:name=".ui.farmer.FarmerDashboardActivity"
             android:exported="false"/>
 
         <activity
@@ -38,7 +38,7 @@
             android:exported="false"/>
 
         <activity
-            android:name=".ui.farmers.ChatActivity"
+            android:name=".ui.farmer.ChatActivity"
             android:exported="false"/>
 
     </application>
