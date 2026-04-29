@@ -23,6 +23,12 @@ class Harvest(Base):
     income_earned = Column(Float, nullable=True)
     ended_at = Column(DateTime(timezone=True), nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    income_level = Column(String, nullable=True)
+    planting_season = Column(String, nullable=True)
+    start_month = Column(Integer, nullable=True)
+    end_month = Column(Integer, nullable=True)
+    farmer_accepted_recommendation = Column(Boolean, default=True)
+    end_feedback = Column(String, nullable=True)
 
     farmer = relationship("User", backref="harvests")
     anomalies = relationship("HarvestAnomaly", backref="harvest")

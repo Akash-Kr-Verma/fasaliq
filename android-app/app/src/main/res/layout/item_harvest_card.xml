@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/bg_card_rounded"
+    android:padding="16dp"
+    android:layout_marginBottom="12dp"
+    android:elevation="2dp">
+
+    <!-- Header row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="12dp">
+
+        <TextView
+            android:id="@+id/tvCropEmoji"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🌾"
+            android:textSize="28sp"
+            android:layout_marginEnd="12dp"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/tvCropName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Crop Name"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_dark"/>
+            <TextView
+                android:id="@+id/tvFieldName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Field Name"
+                android:textSize="12sp"
+                android:textColor="@color/text_soft"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvHealthStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="● Good"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/status_growing_text"
+            android:background="@drawable/bg_status_growing"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"/>
+    </LinearLayout>
+
+    <!-- Progress bar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp">
+
+        <ProgressBar
+            android:id="@+id/progressHarvest"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="0dp"
+            android:layout_height="8dp"
+            android:layout_weight="1"
+            android:max="100"
+            android:progress="0"
+            android:progressTint="@color/leaf_green"
+            android:progressBackgroundTint="@color/divider"
+            android:layout_marginEnd="10dp"/>
+
+        <TextView
+            android:id="@+id/tvProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0%"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/forest_green"/>
+    </LinearLayout>
+
+    <!-- Stats row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="12dp">
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Season" android:textSize="11sp" android:textColor="@color/text_soft"/>
+            <TextView android:id="@+id/tvSeason" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="—" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Field Size" android:textSize="11sp" android:textColor="@color/text_soft"/>
+            <TextView android:id="@+id/tvFieldSize" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="—" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Days Left" android:textSize="11sp" android:textColor="@color/text_soft"/>
+            <TextView android:id="@+id/tvDaysLeft" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="—" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/forest_green"/>
+        </LinearLayout>
+
+        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Issues" android:textSize="11sp" android:textColor="@color/text_soft"/>
+            <TextView android:id="@+id/tvAnomalies" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Action buttons -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:id="@+id/btnReportIssue"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_status_growing"
+            android:gravity="center"
+            android:layout_marginEnd="8dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="⚠️ Report Issue"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/status_growing_text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/btnEndHarvest"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:background="@drawable/bg_logout"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🏁 End Season"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:textColor="@color/emergency_red"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

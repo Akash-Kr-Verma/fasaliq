@@ -15,13 +15,18 @@ class StartHarvestRequest(BaseModel):
     field_name: str
     crop_name: str
     season: str
+    start_month: int
+    end_month: int
     field_size: float
     soil_type: Optional[str] = "loamy"
     irrigation: Optional[str] = "borewell"
+    income_level: Optional[str] = "middle"
     expected_days: Optional[int] = 120
+    farmer_accepted_recommendation: Optional[bool] = True
 
 class EndHarvestRequest(BaseModel):
     harvest_id: int
+    end_feedback: str
     actual_yield: Optional[float] = None
     income_earned: Optional[float] = None
     notes: Optional[str] = None
@@ -53,10 +58,14 @@ def start_harvest(
         field_name=data.field_name,
         crop_name=data.crop_name,
         season=data.season,
+        start_month=data.start_month,
+        end_month=data.end_month,
         field_size=data.field_size,
         soil_type=data.soil_type,
         irrigation=data.irrigation,
+        income_level=data.income_level,
         expected_harvest_date=expected_date,
+        farmer_accepted_recommendation=data.farmer_accepted_recommendation,
         status="active",
         health_status="good"
     )
@@ -176,6 +185,7 @@ def end_harvest(
 
     harvest.status = "completed"
     harvest.ended_at = datetime.utcnow()
+    harvest.end_feedback = data.end_feedback
     harvest.actual_yield = data.actual_yield
     harvest.income_earned = data.income_earned
     harvest.notes = data.notes
@@ -240,19 +250,28 @@ def get_harvest_anomalies(
 def get_recommendation_for_harvest(
     farmer_id: int,
     season: str,
+    start_month: int,
+    end_month: int,
     field_size: float = 1.0,
     soil_type: str = "loamy",
     irrigation: str = "borewell",
+    income_level: str = "middle",
     district: str = "Pune",
     db: Session = Depends(get_db)
 ):
+    from app.models.buyer_interests import BuyerInterest
+    from app.models.crops import Crop
+
     farmer_profile = {
         "soil_type": soil_type,
         "irrigation": irrigation,
         "last_crop": None,
         "field_size": field_size,
         "district": district,
-        "season": season
+        "season": season,
+        "start_month": start_month,
+        "end_month": end_month,
+        "income_level": income_level
     }
 
     last_harvest = db.query(Harvest).filter(
@@ -263,10 +282,36 @@ def get_recommendation_for_harvest(
     if last_harvest:
         farmer_profile["last_crop"] = last_harvest.crop_name
 
-    recommendations = score_crops(farmer_profile)
+    buyer_interests_raw = db.query(BuyerInterest).filter(
+        BuyerInterest.district == district,
+        BuyerInterest.status == "open"
+    ).all()
+
+    buyer_interests = []
+    for b in buyer_interests_raw:
+        crop = db.query(Crop).filter(
+            Crop.id == b.crop_id
+        ).first()
+        if crop:
+            buyer_interests.append({
+                "crop_name": crop.name,
+                "quantity": b.quantity,
+                "offered_price": b.offered_price,
+                "district": b.district
+            })
+
+    recommendations = score_crops(
+        farmer_profile,
+        buyer_interests=buyer_interests
+    )
 
     return {
         "farmer_id": farmer_id,
+        "district": district,
         "season": season,
-        "recommendations": recommendations
+        "start_month": start_month,
+        "end_month": end_month,
+        "income_level": income_level,
+        "recommendations": recommendations,
+        "buyer_demand_active": len(buyer_interests)
     }

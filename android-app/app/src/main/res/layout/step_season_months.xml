@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_light">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="When do you want to plant?"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_dark"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="We check buyer demand for your harvest month"
+            android:textSize="13sp"
+            android:textColor="@color/text_soft"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Season" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark" android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
+            <TextView android:id="@+id/seasonKharif" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:gravity="center" android:text="Kharif\n(Jun-Oct)" android:textSize="12sp" android:textColor="#FFFFFF" android:background="@color/forest_green" android:layout_marginEnd="8dp"/>
+            <TextView android:id="@+id/seasonRabi" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:gravity="center" android:text="Rabi\n(Nov-Mar)" android:textSize="12sp" android:textColor="@color/text_mid" android:background="@drawable/bg_card_rounded" android:layout_marginEnd="8dp"/>
+            <TextView android:id="@+id/seasonAnnual" android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" android:gravity="center" android:text="Annual\n(Year round)" android:textSize="12sp" android:textColor="@color/text_mid" android:background="@drawable/bg_card_rounded"/>
+        </LinearLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Planting Start Month" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark" android:layout_marginBottom="8dp"/>
+        <android.widget.Spinner
+            android:id="@+id/spinnerStartMonth"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/input_bg"
+            android:layout_marginBottom="16dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Expected Harvest End Month" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark" android:layout_marginBottom="8dp"/>
+        <android.widget.Spinner
+            android:id="@+id/spinnerEndMonth"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/input_bg"
+            android:layout_marginBottom="16dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/status_growing"
+            android:padding="14dp"
+            android:gravity="center_vertical">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="💡" android:textSize="18sp" android:layout_marginEnd="10dp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="We check which buyers have placed orders for your harvest month so you have a guaranteed buyer ready." android:textSize="12sp" android:textColor="@color/status_growing_text" android:lineSpacingExtra="3dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

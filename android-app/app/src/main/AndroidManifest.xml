@@ -41,5 +41,9 @@
             android:name=".ui.farmer.ChatActivity"
             android:exported="false"/>
 
+        <activity
+            android:name=".ui.farmer.NewHarvestActivity"
+            android:exported="false"/>
+
     </application>
 </manifest>

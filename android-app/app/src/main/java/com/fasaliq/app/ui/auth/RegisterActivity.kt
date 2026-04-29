@@ -10,6 +10,7 @@ import com.fasaliq.app.R
 import com.fasaliq.app.api.RetrofitClient
 import com.fasaliq.app.models.RegisterRequest
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 class RegisterActivity : AppCompatActivity() {
 

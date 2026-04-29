@@ -99,3 +99,68 @@ data class ChatMessageRequest(
     val message_type: String = "text",
     val image_base64: String? = null
 )
+
+data class StartHarvestRequest(
+    val farmer_id: Int,
+    val field_name: String,
+    val crop_name: String,
+    val season: String,
+    val start_month: Int,
+    val end_month: Int,
+    val field_size: Double,
+    val soil_type: String = "loamy",
+    val irrigation: String = "borewell",
+    val income_level: String = "middle",
+    val expected_days: Int = 120,
+    val farmer_accepted_recommendation: Boolean = true
+)
+
+data class HarvestItem(
+    val harvest_id: Int,
+    val field_name: String,
+    val crop_name: String,
+    val season: String,
+    val field_size: Double,
+    val soil_type: String?,
+    val irrigation: String?,
+    val days_remaining: Int?,
+    val progress_percent: Int,
+    val health_status: String,
+    val active_anomalies: Int,
+    val status: String
+)
+
+data class ActiveHarvestsResponse(
+    val farmer_id: Int,
+    val active_count: Int,
+    val harvests: List<HarvestItem>
+)
+
+data class EndHarvestRequest(
+    val harvest_id: Int,
+    val end_feedback: String,
+    val actual_yield: Double?,
+    val income_earned: Double?,
+    val notes: String?
+)
+
+data class CropRecommendation(
+    val crop_name: String,
+    val season: String,
+    val score: Double,
+    val income_estimate: Double,
+    val has_msp: Boolean,
+    val msp: Double,
+    val reasons: List<String>
+)
+
+data class RecommendationResponse(
+    val farmer_id: Int,
+    val district: String,
+    val season: String,
+    val start_month: Int,
+    val end_month: Int,
+    val income_level: String,
+    val recommendations: List<CropRecommendation>,
+    val buyer_demand_active: Int
+)

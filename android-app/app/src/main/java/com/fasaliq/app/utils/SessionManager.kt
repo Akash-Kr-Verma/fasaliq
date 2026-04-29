@@ -40,4 +40,7 @@ class SessionManager(context: Context) {
     fun clearSession() = prefs.edit().clear().apply()
 
     fun getBearerToken(): String = "Bearer ${getToken()}"
+
+    fun getDistrict(): String? =
+        prefs.getString("user_district", null)
 }

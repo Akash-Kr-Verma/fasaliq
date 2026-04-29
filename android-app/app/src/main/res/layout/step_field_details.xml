@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_light">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tell us about your field"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_dark"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="This helps us recommend the right crop for you"
+            android:textSize="13sp"
+            android:textColor="@color/text_soft"
+            android:layout_marginBottom="24dp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Field Name" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark" android:layout_marginBottom="6dp"/>
+        <EditText
+            android:id="@+id/etFieldName"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:hint="e.g. North Acre, Home Field"
+            android:background="@drawable/input_bg"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:inputType="textCapWords"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Field Size (acres)" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark" android:layout_marginBottom="6dp"/>
+        <EditText
+            android:id="@+id/etFieldSize"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:hint="e.g. 2.5"
+            android:background="@drawable/input_bg"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:inputType="numberDecimal"
+            android:layout_marginBottom="16dp"/>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Soil Type" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark" android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+            <TextView android:id="@+id/soilLoamy" android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1" android:gravity="center" android:text="Loamy" android:textSize="13sp" android:textColor="@color/forest_green" android:background="@color/forest_green" android:textColor="#FFFFFF" android:layout_marginEnd="6dp"/>
+            <TextView android:id="@+id/soilClay" android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1" android:gravity="center" android:text="Clay" android:textSize="13sp" android:textColor="@color/text_mid" android:background="@drawable/bg_card_rounded" android:layout_marginEnd="6dp"/>
+            <TextView android:id="@+id/soilSandy" android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1" android:gravity="center" android:text="Sandy" android:textSize="13sp" android:textColor="@color/text_mid" android:background="@drawable/bg_card_rounded" android:layout_marginEnd="6dp"/>
+            <TextView android:id="@+id/soilBlack" android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1" android:gravity="center" android:text="Black" android:textSize="13sp" android:textColor="@color/text_mid" android:background="@drawable/bg_card_rounded"/>
+        </LinearLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Irrigation Type" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark" android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+            <TextView android:id="@+id/irrBorewell" android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1" android:gravity="center" android:text="Borewell" android:textSize="12sp" android:textColor="#FFFFFF" android:background="@color/forest_green" android:layout_marginEnd="6dp"/>
+            <TextView android:id="@+id/irrCanal" android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1" android:gravity="center" android:text="Canal" android:textSize="12sp" android:textColor="@color/text_mid" android:background="@drawable/bg_card_rounded" android:layout_marginEnd="6dp"/>
+            <TextView android:id="@+id/irrRainfed" android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1" android:gravity="center" android:text="Rainfed" android:textSize="12sp" android:textColor="@color/text_mid" android:background="@drawable/bg_card_rounded" android:layout_marginEnd="6dp"/>
+            <TextView android:id="@+id/irrDrip" android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1" android:gravity="center" android:text="Drip" android:textSize="12sp" android:textColor="@color/text_mid" android:background="@drawable/bg_card_rounded"/>
+        </LinearLayout>
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Your Income Level" android:textSize="13sp" android:textStyle="bold" android:textColor="@color/text_dark" android:layout_marginBottom="8dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="8dp">
+            <TextView android:id="@+id/incomePoor" android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1" android:gravity="center" android:text="Poor" android:textSize="13sp" android:textColor="@color/text_mid" android:background="@drawable/bg_card_rounded" android:layout_marginEnd="6dp"/>
+            <TextView android:id="@+id/incomeMiddle" android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1" android:gravity="center" android:text="Middle" android:textSize="13sp" android:textColor="#FFFFFF" android:background="@color/forest_green" android:layout_marginEnd="6dp"/>
+            <TextView android:id="@+id/incomeRich" android:layout_width="0dp" android:layout_height="44dp" android:layout_weight="1" android:gravity="center" android:text="Rich" android:textSize="13sp" android:textColor="@color/text_mid" android:background="@drawable/bg_card_rounded"/>
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

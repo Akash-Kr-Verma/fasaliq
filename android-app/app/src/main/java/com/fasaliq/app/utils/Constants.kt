@@ -8,4 +8,5 @@ object Constants {
     const val PREF_USER_ID = "user_id"
     const val PREF_ROLE = "user_role"
     const val PREF_NAME = "user_name"
+    const val DEFAULT_DISTRICT = "Pune"
 }

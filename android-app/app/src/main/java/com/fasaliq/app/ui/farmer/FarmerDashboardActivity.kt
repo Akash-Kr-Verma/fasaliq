@@ -49,11 +49,11 @@ class FarmerDashboardActivity : AppCompatActivity() {
             override fun getItemCount() = 4
             override fun createFragment(position: Int): Fragment =
                 when (position) {
-                    0 -> ProfileFragment()
+                    0 -> ActiveSeasonFragment()
                     1 -> HistoryFragment()
                     2 -> DocumentsFragment()
                     3 -> NewsletterFragment()
-                    else -> ProfileFragment()
+                    else -> ActiveSeasonFragment()
                 }
         }
 
