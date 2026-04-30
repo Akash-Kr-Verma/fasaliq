@@ -32,3 +32,7 @@ class UserResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class FCMTokenUpdate(BaseModel):
+    user_id: int
+    fcm_token: str

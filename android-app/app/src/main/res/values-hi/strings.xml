@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FasalIQ</string>
+    <string name="nav_profile">प्रोफ़ाइल</string>
+    <string name="nav_history">इतिहास</string>
+    <string name="nav_ai">एआई</string>
+    <string name="nav_documents">दस्तावेज़</string>
+    <string name="nav_newsletter">न्यूज़लेटर</string>
+    <string name="emergency_title">आपातकाल</string>
+    <string name="emergency_subtitle">स्पीड डायल</string>
+    <string name="emergency_tap">मदद के लिए टैप करें</string>
+    <string name="logged_in">आपने लॉग इन किया हुआ है</string>
+    <string name="login_status">लॉगिन स्थिति</string>
+    <string name="logout">लॉग आउट</string>
+    <string name="personal_details">व्यक्तिगत विवरण</string>
+    <string name="land_field_details">भूमि और खेत का विवरण</string>
+    <string name="notification_settings">अधिसूचना सेटिंग्स</string>
+    <string name="app_settings">ऐप सेटिंग्स</string>
+    <string name="help_support">सहायता और समर्थन</string>
+</resources>

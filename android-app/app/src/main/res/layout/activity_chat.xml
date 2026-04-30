@@ -24,7 +24,7 @@
             android:textStyle="bold"/>
 
         <TextView
-            android:id="@+id/tvAnomalyBadge"
+            android:id="@+id/tvInsightBadge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text=""
@@ -37,6 +37,48 @@
             android:paddingBottom="3dp"
             android:visibility="gone"/>
 
+        <Button
+            android:id="@+id/btnEndSession"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:text="End Session"
+            android:textSize="12sp"
+            android:textColor="@color/forest_green"
+            android:backgroundTint="#FFFFFF"
+            android:layout_marginStart="8dp"
+            android:visibility="gone"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llInactiveState"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:padding="24dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🤖"
+            android:textSize="64sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="How can I help you today?"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_dark"
+            android:layout_marginTop="16dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ask a question, use voice, or upload a photo."
+            android:textSize="14sp"
+            android:textColor="@color/text_soft"
+            android:gravity="center"
+            android:layout_marginTop="8dp"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

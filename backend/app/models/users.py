@@ -19,4 +19,5 @@ class User(Base):
     role = Column(Enum(UserRole), nullable=False)
     district = Column(String, nullable=False)
     state = Column(String, default="Maharashtra")
+    fcm_token = Column(String, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

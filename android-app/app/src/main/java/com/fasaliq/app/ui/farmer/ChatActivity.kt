@@ -21,9 +21,13 @@ import org.json.JSONObject
 import java.io.ByteArrayOutputStream
 import java.util.Locale
 import com.fasaliq.app.models.ChatMessageRequest
+import androidx.lifecycle.ViewModelProvider
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class ChatActivity : AppCompatActivity() {
 
+    private lateinit var viewModel: FarmerViewModel
     private lateinit var session: SessionManager
     private lateinit var adapter: ChatAdapter
     private var sessionId: String? = null
@@ -41,24 +45,61 @@ class ChatActivity : AppCompatActivity() {
         session = SessionManager(this)
         adapter = ChatAdapter()
 
+        viewModel = ViewModelProvider(this)[FarmerViewModel::class.java]
+
+        val llInactiveState = findViewById<LinearLayout>(R.id.llInactiveState)
         val rvMessages = findViewById<RecyclerView>(R.id.rvMessages)
         val etMessage = findViewById<EditText>(R.id.etMessage)
         val btnSend = findViewById<Button>(R.id.btnSend)
         val btnVoice = findViewById<ImageButton>(R.id.btnVoice)
         val btnCamera = findViewById<ImageButton>(R.id.btnCamera)
-        val tvAnomalyBadge = findViewById<TextView>(R.id.tvAnomalyBadge)
+        val tvInsightBadge = findViewById<TextView>(R.id.tvInsightBadge)
+        val btnEndSession = findViewById<Button>(R.id.btnEndSession)
 
         rvMessages.layoutManager = LinearLayoutManager(this).apply {
             stackFromEnd = true
         }
         rvMessages.adapter = adapter
 
+        fun updateUIState() {
+            if (adapter.itemCount == 0) {
+                llInactiveState.visibility = View.VISIBLE
+                rvMessages.visibility = View.GONE
+                btnEndSession.visibility = View.GONE
+            } else {
+                llInactiveState.visibility = View.GONE
+                rvMessages.visibility = View.VISIBLE
+                btnEndSession.visibility = View.VISIBLE
+            }
+        }
+        updateUIState()
+
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onChanged() = updateUIState()
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) = updateUIState()
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) = updateUIState()
+        })
+
         startChatSession()
+
+        btnEndSession.setOnClickListener {
+            // Save session to documents
+            val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+            val dateStr = dateFormat.format(Date())
+            viewModel.addDocument(Document(
+                id = System.currentTimeMillis().toString(),
+                title = "AI Session Summary",
+                date = dateStr,
+                type = "Session"
+            ))
+            Toast.makeText(this, "Session saved to Documents", Toast.LENGTH_SHORT).show()
+            finish()
+        }
 
         btnSend.setOnClickListener {
             val text = etMessage.text.toString().trim()
             if (text.isEmpty() && pendingImageBase64 == null) return@setOnClickListener
-            sendMessage(text, etMessage, rvMessages, tvAnomalyBadge)
+            sendMessage(text, etMessage, rvMessages, tvInsightBadge)
         }
 
         btnVoice.setOnClickListener {
@@ -107,7 +148,7 @@ class ChatActivity : AppCompatActivity() {
         text: String,
         etMessage: EditText,
         rvMessages: RecyclerView,
-        tvAnomalyBadge: TextView
+        tvInsightBadge: TextView
     ) {
         val msgText = if (pendingImageBase64 != null && text.isEmpty())
             "[Photo sent]" else text
@@ -139,10 +180,16 @@ class ChatActivity : AppCompatActivity() {
                     adapter.addMessage(ChatMessage(aiText, false))
                     rvMessages.scrollToPosition(adapter.itemCount - 1)
 
+                    // Show ONLY one insight derived directly from the payload. No hardcoded anomalies.
                     val anomaly = respBody["anomaly_detected"]
-                    if (anomaly != null) {
-                        tvAnomalyBadge.text = "⚠️ Anomaly Detected"
-                        tvAnomalyBadge.visibility = View.VISIBLE
+                    val suggestion = respBody["suggestion"]
+                    
+                    if (anomaly != null && anomaly.toString().isNotBlank()) {
+                        tvInsightBadge.text = "⚠️ Issue: $anomaly"
+                        tvInsightBadge.visibility = View.VISIBLE
+                    } else if (suggestion != null && suggestion.toString().isNotBlank()) {
+                        tvInsightBadge.text = "💡 Insight: $suggestion"
+                        tvInsightBadge.visibility = View.VISIBLE
                     }
                 }
             } catch (e: Exception) {

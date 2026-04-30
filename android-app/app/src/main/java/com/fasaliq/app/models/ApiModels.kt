@@ -50,7 +50,7 @@ data class Factors(
     val switch_risk: Double
 )
 
-data class RecommendationResponse(
+data class OldRecommendationResponse(
     val user_id: Int,
     val district: String,
     val season: String,

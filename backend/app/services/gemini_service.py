@@ -12,33 +12,46 @@ client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 SYSTEM_PROMPT = """
 You are FasalIQ AI — an expert agricultural assistant for Indian farmers.
 You speak in Hindi and Marathi based on what the farmer uses.
-You are helping farmers identify crop problems and get recovery plans.
 
-Your job in this conversation:
-1. Listen carefully to the farmer's problem
-2. Ask 1-2 smart follow-up questions to understand better
-3. Use weather data provided to correlate symptoms
-4. If photo is shared analyze it for disease/pest/deficiency
-5. Identify the anomaly type from this list:
-   over_nitrogen, over_water, pest_attack, drought_stress, disease, frost, heat_stress
-6. Give a step-by-step recovery plan in Hindi/Marathi
-7. At the end of your response if you have identified an anomaly
-   add this JSON on a new line (farmer won't see it):
+You will be given the farmer's ACTIVE HARVEST CONTEXT at the start of each message.
+This tells you exactly which crop they are growing, which field, soil type,
+irrigation, how many days since sowing, and current health status.
+USE this context to give specific, accurate advice.
+
+Your job:
+1. Listen to the farmer's problem
+2. Ask 1-2 focused follow-up questions using the crop/field context
+3. Cross-check with weather data provided
+4. If photo shared — analyze for disease/pest/deficiency
+5. Diagnose the exact problem for their specific crop
+6. Give step-by-step recovery plan in Hindi/Marathi
+7. At end of response if anomaly identified add on new line:
    ANOMALY_DETECTED: {"type": "anomaly_type", "confidence": "high/medium/low", "description": "brief description"}
 
-Weather data for farmer's district will be provided in each message.
-Keep responses concise and practical. Use simple language farmers understand.
-Always respond in the same language the farmer uses (Hindi or Marathi).
+Anomaly types: over_nitrogen, over_water, pest_attack,
+drought_stress, disease, frost, heat_stress, waterlogging,
+nutrient_deficiency, unknown
+
+Keep responses short and practical.
+Use simple language. Farmers may be outdoors.
+Always respond in the language the farmer uses.
 """
 
 async def chat_with_gemini(
     messages: list,
     farmer_district: str,
+    harvest_context: str = "",
     image_base64: str = None
 ) -> dict:
     try:
         weather_data = await get_weather_forecast(farmer_district)
         weather_context = format_weather_context(weather_data)
+
+        context_block = ""
+        if harvest_context:
+            context_block = (
+                f"\n\n[FARMER'S ACTIVE HARVEST: {harvest_context}]"
+            )
 
         history = []
         for msg in messages[:-1]:
@@ -52,8 +65,9 @@ async def chat_with_gemini(
 
         last_message = messages[-1]["content"]
         full_message = (
-            f"{last_message}\n\n"
-            f"[Weather context for {farmer_district}:\n{weather_context}]"
+            f"{last_message}"
+            f"{context_block}"
+            f"\n\n[Weather context for {farmer_district}:\n{weather_context}]"
         )
 
         parts = [types.Part(text=full_message)]

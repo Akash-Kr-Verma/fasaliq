@@ -13,8 +13,11 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.fasaliq.app.R
 import com.fasaliq.app.utils.SessionManager
+import kotlinx.coroutines.launch
 
 class FarmerDashboardActivity : AppCompatActivity() {
 
@@ -37,11 +40,14 @@ class FarmerDashboardActivity : AppCompatActivity() {
         R.id.labelNewsletter
     )
 
+    private lateinit var viewModel: FarmerViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_farmer_dashboard)
 
         session = SessionManager(this)
+        viewModel = ViewModelProvider(this)[FarmerViewModel::class.java]
         viewPager = findViewById(R.id.viewPager)
         viewPager.isUserInputEnabled = false
 
@@ -58,8 +64,45 @@ class FarmerDashboardActivity : AppCompatActivity() {
         }
 
         setupNavigation()
+        setupTopNav()
         startAIPulse()
         selectTab(0)
+    }
+
+    private fun setupTopNav() {
+        val cardUserInfo = findViewById<LinearLayout>(R.id.cardUserInfo)
+        val llExpandedInfo = findViewById<LinearLayout>(R.id.llExpandedInfo)
+        val tvUserName = findViewById<TextView>(R.id.tvUserName)
+        val tvUserPhone = findViewById<TextView>(R.id.tvUserPhone)
+        val tvUserIncome = findViewById<TextView>(R.id.tvUserIncome)
+        val btnEmergency = findViewById<FrameLayout>(R.id.btnEmergency)
+
+        cardUserInfo.setOnClickListener {
+            if (llExpandedInfo.visibility == android.view.View.VISIBLE) {
+                llExpandedInfo.visibility = android.view.View.GONE
+            } else {
+                llExpandedInfo.visibility = android.view.View.VISIBLE
+            }
+        }
+
+        btnEmergency.setOnClickListener {
+            // Emergency action
+        }
+
+        lifecycleScope.launch {
+            viewModel.state.collect { state ->
+                val farmer = state.farmer
+                if (farmer != null) {
+                    tvUserName.text = farmer.name
+                    tvUserPhone.text = farmer.phone
+                    tvUserIncome.text = farmer.income_level?.uppercase() ?: ""
+                } else {
+                    tvUserName.text = "Login / Register"
+                    tvUserPhone.text = ""
+                    tvUserIncome.text = ""
+                }
+            }
+        }
     }
 
     private fun setupNavigation() {

@@ -27,7 +27,7 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("user_id") userId: Int,
         @Query("season") season: String
-    ): Response<RecommendationResponse>
+    ): Response<OldRecommendationResponse>
 
     @POST("api/farmer/select-crop")
     suspend fun selectCrop(

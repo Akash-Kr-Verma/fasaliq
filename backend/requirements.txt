@@ -10,3 +10,4 @@ scikit-learn
 httpx
 
 google-genai
+firebase-admin

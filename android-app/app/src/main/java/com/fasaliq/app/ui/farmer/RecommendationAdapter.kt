@@ -62,7 +62,7 @@ class RecommendationAdapter(
                 textSize = 12f
                 setTextColor(Color.parseColor("#4A6741"))
                 setPadding(0, 3, 0, 3)
-                lineSpacingExtra = 2f
+                setLineSpacing(2f, 1f)
             }
             holder.llReasons.addView(tv)
         }

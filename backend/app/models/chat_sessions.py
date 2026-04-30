@@ -9,6 +9,7 @@ class ChatSession(Base):
     id = Column(Integer, primary_key=True, index=True)
     farmer_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     session_id = Column(String, unique=True, nullable=False)
+    harvest_id = Column(Integer, ForeignKey("harvests.id"), nullable=True)
     status = Column(String, default="active")
     anomaly_detected = Column(String, nullable=True)
     anomaly_confidence = Column(String, nullable=True)

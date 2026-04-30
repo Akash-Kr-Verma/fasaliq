@@ -170,6 +170,8 @@ class ActiveSeasonFragment : Fragment() {
                         field_name = fieldName,
                         crop_name = cropName,
                         season = season,
+                        start_month = 6,
+                        end_month = 10,
                         field_size = fieldSize
                     )
                 )
@@ -212,6 +214,7 @@ class ActiveSeasonFragment : Fragment() {
                     session.getBearerToken(),
                     EndHarvestRequest(
                         harvest_id = harvestId,
+                        end_feedback = "Ended manually",
                         actual_yield = null,
                         income_earned = null,
                         notes = null
