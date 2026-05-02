@@ -55,7 +55,7 @@ interface ApiService {
     ): Response<Map<String, Any>>
     @POST("api/chat/start")
     suspend fun startChatSession(
-        @Body request: Map<String, Int>
+        @Body request: Map<String, Any>
     ): Response<Map<String, Any>>
 
     @POST("api/chat/message")

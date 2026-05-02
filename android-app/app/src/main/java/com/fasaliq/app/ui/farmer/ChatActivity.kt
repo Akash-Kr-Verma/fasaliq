@@ -34,6 +34,7 @@ class ChatActivity : AppCompatActivity() {
     private var pendingImageBase64: String? = null
 
     companion object {
+        const val EXTRA_HARVEST_ID = "harvest_id"
         const val CAMERA_REQUEST = 1001
         const val VOICE_REQUEST = 1002
     }
@@ -125,21 +126,39 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun startChatSession() {
+        val harvestId = intent.getIntExtra(EXTRA_HARVEST_ID, -1)
+
         lifecycleScope.launch {
             try {
-                val response = RetrofitClient.instance.startChatSession(
-                    mapOf("farmer_id" to session.getUserId())
+                val body = mutableMapOf<String, Any>(
+                    "farmer_id" to session.getUserId()
                 )
+                if (harvestId != -1) {
+                    body["harvest_id"] = harvestId
+                }
+
+                val response = RetrofitClient.instance
+                    .startChatSession(body)
+
                 if (response.isSuccessful) {
-                    val body = response.body()!!
-                    sessionId = body["session_id"] as? String
-                    val welcome = body["welcome_message"] as? String ?: ""
+                    val respBody = response.body()!!
+                    sessionId = respBody["session_id"] as? String
+
+                    val cropName = respBody["crop_name"] as? String
+                    val fieldName = respBody["field_name"] as? String
+
+                    if (cropName != null) {
+                        findViewById<TextView>(R.id.tvChatTitle).text =
+                            "AI — $cropName ($fieldName)"
+                    }
+
+                    val welcome = respBody["welcome_message"] as? String ?: ""
                     adapter.addMessage(ChatMessage(welcome, false))
                 }
             } catch (e: Exception) {
-                adapter.addMessage(ChatMessage(
-                    "Connection error. Please check server.", false
-                ))
+                adapter.addMessage(
+                    ChatMessage("Connection error.", false)
+                )
             }
         }
     }

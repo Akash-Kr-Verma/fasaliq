@@ -315,3 +315,90 @@ def get_recommendation_for_harvest(
         "recommendations": recommendations,
         "buyer_demand_active": len(buyer_interests)
     }
+
+@router.get("/buyers/{harvest_id}")
+def get_matched_buyers(
+    harvest_id: int,
+    db: Session = Depends(get_db)
+):
+    harvest = db.query(Harvest).filter(
+        Harvest.id == harvest_id
+    ).first()
+    if not harvest:
+        raise HTTPException(
+            status_code=404, detail="Harvest not found"
+        )
+
+    farmer = db.query(User).filter(
+        User.id == harvest.farmer_id
+    ).first()
+
+    from app.models.buyer_interests import BuyerInterest
+    from app.models.crops import Crop
+
+    crop = db.query(Crop).filter(
+        Crop.name == harvest.crop_name
+    ).first()
+
+    if not crop:
+        return {
+            "harvest_id": harvest_id,
+            "crop_name": harvest.crop_name,
+            "matched_buyers": [],
+            "total": 0
+        }
+
+    same_district = db.query(BuyerInterest).join(
+        User, BuyerInterest.buyer_id == User.id
+    ).filter(
+        BuyerInterest.crop_id == crop.id,
+        BuyerInterest.status == "open",
+        User.district == farmer.district
+    ).all()
+
+    other_district = db.query(BuyerInterest).join(
+        User, BuyerInterest.buyer_id == User.id
+    ).filter(
+        BuyerInterest.crop_id == crop.id,
+        BuyerInterest.status == "open",
+        User.district != farmer.district
+    ).limit(5).all()
+
+    all_interests = same_district + other_district
+
+    result = []
+    for interest in all_interests:
+        buyer = db.query(User).filter(
+            User.id == interest.buyer_id
+        ).first()
+        if buyer:
+            result.append({
+                "interest_id": interest.id,
+                "buyer_id": interest.buyer_id,
+                "buyer_name": buyer.name,
+                "buyer_district": buyer.district,
+                "quantity_kg": interest.quantity,
+                "offered_price_per_kg": interest.offered_price,
+                "total_value": round(
+                    interest.quantity * interest.offered_price, 2
+                ),
+                "same_district": buyer.district == farmer.district,
+                "status": interest.status
+            })
+
+    result.sort(
+        key=lambda x: (
+            x["same_district"],
+            x["offered_price_per_kg"]
+        ),
+        reverse=True
+    )
+
+    return {
+        "harvest_id": harvest_id,
+        "crop_name": harvest.crop_name,
+        "field_name": harvest.field_name,
+        "farmer_district": farmer.district,
+        "matched_buyers": result,
+        "total": len(result)
+    }

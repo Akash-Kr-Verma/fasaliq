@@ -241,7 +241,9 @@ class ActiveSeasonFragment : Fragment() {
     private fun showReportIssueDialog(harvest: HarvestItem) {
         val intent = android.content.Intent(
             requireContext(), ChatActivity::class.java
-        )
+        ).apply {
+            putExtra(ChatActivity.EXTRA_HARVEST_ID, harvest.harvest_id)
+        }
         startActivity(intent)
     }
 }
