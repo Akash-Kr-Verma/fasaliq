@@ -54,7 +54,8 @@ class ActiveSeasonFragment : Fragment() {
 
         harvestAdapter = HarvestAdapter(
             onEndHarvest = { harvest -> showEndHarvestDialog(harvest) },
-            onReportIssue = { harvest -> showReportIssueDialog(harvest) }
+            onReportIssue = { harvest -> showReportIssueDialog(harvest) },
+            onLoadBuyers = { harvest, holder -> loadBuyersForHarvest(harvest, holder) }
         )
 
         view.findViewById<RecyclerView>(R.id.rvActiveHarvests).apply {
@@ -245,5 +246,29 @@ class ActiveSeasonFragment : Fragment() {
             putExtra(ChatActivity.EXTRA_HARVEST_ID, harvest.harvest_id)
         }
         startActivity(intent)
+    }
+
+    private fun loadBuyersForHarvest(
+        harvest: HarvestItem,
+        holder: HarvestAdapter.ViewHolder
+    ) {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.instance.getMatchedBuyers(
+                    session.getBearerToken(),
+                    harvest.harvest_id
+                )
+                if (response.isSuccessful) {
+                    val body = response.body()!!
+                    harvestAdapter.updateBuyers(
+                        holder,
+                        body.matched_buyers,
+                        body.total
+                    )
+                }
+            } catch (e: Exception) {
+                harvestAdapter.updateBuyers(holder, emptyList(), 0)
+            }
+        }
     }
 }

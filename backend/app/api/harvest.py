@@ -151,25 +151,59 @@ def get_harvest_history(
         Harvest.status == "completed"
     ).order_by(Harvest.ended_at.desc()).all()
 
+    result = []
+    total_income = 0.0
+    total_seasons = len(harvests)
+
+    for h in harvests:
+        anomalies = db.query(HarvestAnomaly).filter(
+            HarvestAnomaly.harvest_id == h.id
+        ).all()
+
+        anomaly_summary = []
+        for a in anomalies:
+            anomaly_summary.append({
+                "type": a.anomaly_type,
+                "description": a.description,
+                "status": a.status,
+                "reported_at": a.reported_at
+            })
+
+        duration_days = None
+        if h.sowing_date and h.ended_at:
+            duration_days = (
+                h.ended_at.replace(tzinfo=None) -
+                h.sowing_date.replace(tzinfo=None)
+            ).days
+
+        if h.income_earned:
+            total_income += h.income_earned
+
+        result.append({
+            "harvest_id": h.id,
+            "field_name": h.field_name,
+            "crop_name": h.crop_name,
+            "season": h.season,
+            "field_size": h.field_size,
+            "sowing_date": h.sowing_date,
+            "ended_at": h.ended_at,
+            "duration_days": duration_days,
+            "actual_yield": h.actual_yield,
+            "income_earned": h.income_earned,
+            "end_feedback": h.end_feedback,
+            "health_status": h.health_status,
+            "notes": h.notes,
+            "anomaly_count": len(anomalies),
+            "anomalies": anomaly_summary,
+            "farmer_accepted_recommendation":
+                h.farmer_accepted_recommendation
+        })
+
     return {
         "farmer_id": farmer_id,
-        "total_seasons": len(harvests),
-        "harvests": [
-            {
-                "harvest_id": h.id,
-                "field_name": h.field_name,
-                "crop_name": h.crop_name,
-                "season": h.season,
-                "field_size": h.field_size,
-                "sowing_date": h.sowing_date,
-                "ended_at": h.ended_at,
-                "actual_yield": h.actual_yield,
-                "income_earned": h.income_earned,
-                "health_status": h.health_status,
-                "notes": h.notes
-            }
-            for h in harvests
-        ]
+        "total_seasons": total_seasons,
+        "total_income_earned": round(total_income, 2),
+        "harvests": result
     }
 
 @router.post("/end")

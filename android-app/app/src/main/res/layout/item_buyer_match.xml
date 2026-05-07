@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="#FFFFFF"
+    android:padding="12dp"
+    android:gravity="center_vertical"
+    android:layout_marginBottom="6dp">
+
+    <LinearLayout
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:gravity="center"
+        android:background="#E8F5E9"
+        android:layout_marginEnd="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="🏪"
+            android:textSize="18sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvBuyerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buyer Name"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:textColor="#1A2E1A"/>
+
+            <TextView
+                android:id="@+id/tvSameDistrict"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nearby"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:background="#2D5A27"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_marginStart="6dp"
+                android:visibility="gone"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="2dp">
+
+            <TextView
+                android:id="@+id/tvDistrict"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="District"
+                android:textSize="11sp"
+                android:textColor="#5A6B61"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" · "
+                android:textSize="11sp"
+                android:textColor="#5A6B61"/>
+
+            <TextView
+                android:id="@+id/tvQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 kg"
+                android:textSize="11sp"
+                android:textColor="#5A6B61"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="end">
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="₹0/kg"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#2D5A27"/>
+
+        <TextView
+            android:id="@+id/tvTotalValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total: ₹0"
+            android:textSize="10sp"
+            android:textColor="#8FAB89"
+            android:layout_marginTop="2dp"/>
+    </LinearLayout>
+
+</LinearLayout>

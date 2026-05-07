@@ -164,3 +164,57 @@ data class RecommendationResponse(
     val recommendations: List<CropRecommendation>,
     val buyer_demand_active: Int
 )
+
+data class MatchedBuyer(
+    val interest_id: Int,
+    val buyer_id: Int,
+    val buyer_name: String,
+    val buyer_district: String,
+    val quantity_kg: Double,
+    val offered_price_per_kg: Double,
+    val total_value: Double,
+    val same_district: Boolean,
+    val status: String
+)
+
+data class BuyerMatchResponse(
+    val harvest_id: Int,
+    val crop_name: String,
+    val field_name: String,
+    val farmer_district: String,
+    val matched_buyers: List<MatchedBuyer>,
+    val total: Int
+)
+
+data class AnomalySummary(
+    val type: String,
+    val description: String,
+    val status: String,
+    val reported_at: String?
+)
+
+data class HarvestHistoryItem(
+    val harvest_id: Int,
+    val field_name: String,
+    val crop_name: String,
+    val season: String,
+    val field_size: Double,
+    val sowing_date: String?,
+    val ended_at: String?,
+    val duration_days: Int?,
+    val actual_yield: Double?,
+    val income_earned: Double?,
+    val end_feedback: String?,
+    val health_status: String,
+    val notes: String?,
+    val anomaly_count: Int,
+    val anomalies: List<AnomalySummary>,
+    val farmer_accepted_recommendation: Boolean?
+)
+
+data class HarvestHistoryResponse(
+    val farmer_id: Int,
+    val total_seasons: Int,
+    val total_income_earned: Double,
+    val harvests: List<HarvestHistoryItem>
+)

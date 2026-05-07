@@ -79,7 +79,7 @@ interface ApiService {
     suspend fun getHarvestHistory(
         @Header("Authorization") token: String,
         @Path("farmer_id") farmerId: Int
-    ): Response<Map<String, Any>>
+    ): Response<HarvestHistoryResponse>
 
     @POST("api/harvest/end")
     suspend fun endHarvest(
@@ -100,4 +100,10 @@ interface ApiService {
         @Query("income_level") incomeLevel: String,
         @Query("district") district: String
     ): Response<RecommendationResponse>
+
+    @GET("api/harvest/buyers/{harvest_id}")
+    suspend fun getMatchedBuyers(
+        @Header("Authorization") token: String,
+        @Path("harvest_id") harvestId: Int
+    ): Response<BuyerMatchResponse>
 }
